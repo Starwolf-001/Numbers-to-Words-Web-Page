@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+Document   : index.html
+Created on : 11/05/2018, 2:57:00 PM
+Author     : Michael Cartwright
+Version    : 1.0
+-->
+<html>
+    <head>
+        <title>Number to Words Web Page</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <!--Instructions-->
+        <div>Welcome to Michael Cartwright's 'Number to Words Web Page'.</div>
+        <div>-------------------------------------------------------------------
+        ------------------------------------------------------------------</div>
+        <div>Instructions:</div>
+        <div>Input a numeric value into the 'Input' box below. Only numeric and 
+        the decimal characters will be accepted.</div>
+        <div>Click the 'Convert' button below to convert the numeric value into 
+        words.</div>
+        <div>-------------------------------------------------------------------
+        ------------------------------------------------------------------</div>
+        <div>Example:</div>
+        <div>Input: 123.45</div>
+        <div>Output: ONE HUNDRED AND TWENTY-THREE DOLLARS AND FORTY-FIVE CENTS
+        </div>
+        <div>-------------------------------------------------------------------
+        ------------------------------------------------------------------</div>
+        <!--User Interface Script-->
+        <script type ="text/javascript">
+            // Simple validation to communicate to the user aout his/her input 
+            // and notifies them on whether it 'should' be valid or not.
+            // TODO: Have indexOf check each character position of text and
+            //       validate properly. indexOf('char', pos)
+            function validateInput() {
+                var text = document.getElementById("input").value;
+                // Check if certain characters are being used
+                if(text.indexOf('1') > -1 || text.indexOf('2') > -1 ||
+                   text.indexOf('3') > -1 || text.indexOf('4') > -1 ||
+                   text.indexOf('5') > -1 || text.indexOf('6') > -1 ||
+                   text.indexOf('7') > -1 || text.indexOf('8') > -1 ||
+                   text.indexOf('9') > -1 || text.indexOf('0') > -1 ||
+                   text.indexOf('.') > -1) {
+                        // Notify the user that converting is good
+                        document.getElementById("errorInput").innerHTML =
+                            "Ready to Convert";
+                        document.getElementById("errorInput").style.color =
+                            "green";
+                // Notify the user that converting is not good
+                } else {
+                    document.getElementById("errorInput").innerHTML = 
+                            "Please enter only numeric (0 - 9) and a demical \n\
+                            (.) characters only";
+                    document.getElementById("errorInput").style.color =
+                            "red";
+                }
+            }
+        </script>
+        <!--User Interface Form-->
+        <form action ="NumbersToWords" method ="POST" name ="Convert">
+            <table>
+                <tr>
+                    <td>
+                        Input:
+                    </td>
+                    <td>
+                        <input type ="text" id ="input" name ="input" 
+                               onblur ="validateInput();">
+                    </td>
+                    <td>
+                        <label id ="errorInput"></label>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type ="submit" value ="Convert">
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        Output:
+                    </td>
+                    <td>
+                        <input type ="text" id ="output" name ="output">
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>
