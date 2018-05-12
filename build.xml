@@ -8,7 +8,7 @@
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
 <project name="Numbers_to_Words_Web_Page" default="default" basedir=".">
-    <description>Builds, tests, and runs the project Numbers_to_Words_Web_Page.</description>
+    <description>Builds, tests, and runs the project Numbers to Words Web Page.</description>
     <import file="nbproject/build-impl.xml"/>
     <!--
 
