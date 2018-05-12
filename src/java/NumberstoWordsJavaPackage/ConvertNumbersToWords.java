@@ -157,20 +157,6 @@ public class ConvertNumbersToWords extends HttpServlet {
     /*
      *
      */
-    protected void decimalConversion() {
-        convertedOutput = convertedOutput + space + and;
-    }
-    
-    /*
-     *
-     */
-    protected void dollarConversion() {
-        convertedOutput = convertedOutput + space + dollar;
-    }
-    
-    /*
-     *
-     */
     protected void dollarsConversion() {
         convertedOutput = convertedOutput + space + dollars;
     }
@@ -186,7 +172,7 @@ public class ConvertNumbersToWords extends HttpServlet {
      *
      */
     protected void andConversion() {
-        convertedOutput = convertedOutput + space + and;
+        convertedOutput = convertedOutput + space + and + space;
     }
     
     /*
@@ -263,7 +249,12 @@ public class ConvertNumbersToWords extends HttpServlet {
                         reqdispatch.forward(request, response);
                         //TODO report convertOutput = "Error: incorrect format";
                     } else {
-                        
+                        pos = 0;
+                        unitConversion();
+                        dollarsConversion();
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                        //TODO report the converted answer
                     }
                 } else if(inputLength == 2) { // 12
                     if(userInput.charAt(0) == '.' || userInput.charAt(1) == '.') {
@@ -271,39 +262,89 @@ public class ConvertNumbersToWords extends HttpServlet {
                         reqdispatch.forward(request, response);
                         //TODO report convertOutput = "Error: incorrect format";
                     } else {
-
+                        pos = 0;
+                        tensConversion();
+                        dollarsConversion();
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                        //TODO report the converted answer
                     }
                 } else if(inputLength == 3) { // 123
                     if(userInput.charAt(0) == '.' || userInput.charAt(1) == '.' || userInput.charAt(2) == '.') {
                         RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
                         reqdispatch.forward(request, response);
                         //TODO report convertOutput = "Error: incorrect format";
+                    } else {
+                        pos = 0;
+                        hundredsConversion();
+                        andConversion();
+                        pos++;
+                        tensConversion();
+                        dollarsConversion();
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                        //TODO report the converted answer
                     }
                 } else if(inputLength == 4) { // 1.23
                     if(userInput.charAt(1) != '.') {
                         RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
                         reqdispatch.forward(request, response);
                         //TODO report convertOutput = "Error: incorrect format";
+                    } else {
+                        pos = 0;
+                        unitConversion();
+                        dollarsConversion();
+                        andConversion();
+                        pos++;
+                        pos++;
+                        tensConversion();
+                        centsConversion();
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                        //TODO report the converted answer
                     }
                 } else if(inputLength == 5) { // 12.34
                     if(userInput.charAt(2) != '.') {
                         RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
                         reqdispatch.forward(request, response);
                         //TODO report convertOutput = "Error: incorrect format";
+                    } else {
+                        pos = 0;
+                        tensConversion();
+                        dollarsConversion();
+                        andConversion();
+                        pos++;
+                        pos++;
+                        pos++;
+                        tensConversion();
+                        centsConversion();
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                        //TODO report the converted answer
                     }
                 } else if(inputLength == 6) { // 123.45
                     if(userInput.charAt(3) != '.') {
                         RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
                         reqdispatch.forward(request, response);
                         //TODO report convertOutput = "Error: incorrect format";
+                    } else {
+                        pos = 0;
+                        hundredsConversion();
+                        andConversion();
+                        pos++;
+                        tensConversion();
+                        dollarsConversion();
+                        andConversion();
+                        pos++;
+                        pos++;
+                        pos++;
+                        tensConversion();
+                        centsConversion();
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                        //TODO report the converted answer
                     }
                 }
-                
-                //for(int pos = 0; pos < inputLength; pos++) {
-                //    if(userInput.charAt(pos) == '1') {
-                //        
-                //   }
-                //}
             } else {
                 RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
                 reqdispatch.forward(request, response);
