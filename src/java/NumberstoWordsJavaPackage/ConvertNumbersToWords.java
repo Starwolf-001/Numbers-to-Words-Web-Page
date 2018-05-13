@@ -88,14 +88,19 @@ public class ConvertNumbersToWords extends HttpServlet {
         // the user's input has a length of 3 or 6
         if(inputLength == 3 || inputLength == 6) {
             if(limiter == 0 && noExtraAnd == 0) {
-                andConversion();
-                limiter = 1;
+                if(userInput.charAt(1) != '0' && userInput.charAt(2) != '0') {
+                    andConversion();
+                    limiter = 1;
+                }
             }
         }
         noExtraAnd = 0;
         if(userInput.charAt(pos) == '1') {
             pos++;
             if(userInput.charAt(pos) == '0') {
+                if(inputLength == 6 && userInput.charAt(1) != '0' && userInput.charAt(2) == '0') {
+                    andConversion();
+                }
                 convertedOutput = convertedOutput + ten;
             } else if(userInput.charAt(pos) == '1') {
                 convertedOutput = convertedOutput + eleven;
@@ -176,12 +181,15 @@ public class ConvertNumbersToWords extends HttpServlet {
             if(inputLength == 3) {
                 andConversion();
             }
-            else if(inputLength == 6 && userInput.charAt(1) == '0' && userInput.charAt(4) == '0' && limiter == 0) {
+            else if(inputLength == 6 && userInput.charAt(1) == '0' && userInput.charAt(2) != '0' && limiter == 0) {
                 limiter = 1;
                 andConversion();
             }
             pos++;
-            unitConversion();
+            if((inputLength != 6 && userInput.charAt(2) != '0') || (inputLength == 6 && pos == 5)
+                || (inputLength == 6 && userInput.charAt(1) == '0' && userInput.charAt(2) != '0')) {
+                unitConversion();
+            }
         }
     }
     
@@ -423,7 +431,7 @@ public class ConvertNumbersToWords extends HttpServlet {
                 }
                 
                 if(inputLength == 3) {
-                    if(userInput.charAt(0) == '0' && userInput.charAt(1) == '0') {
+                    if((userInput.charAt(0) == '0' && userInput.charAt(1) == '0') || userInput.charAt(0) == '0') {
                         message = "Error: Do not add 0s in front, that is unneccessary";
                         writeToFile(request, response);
                         // Wait 3 seconds
@@ -445,7 +453,7 @@ public class ConvertNumbersToWords extends HttpServlet {
                 }
                 
                 if(inputLength == 6) {
-                    if(userInput.charAt(0) == '0' && userInput.charAt(1) == '0') {
+                    if(userInput.charAt(0) == '0') {
                         message = "Error: Do not add 0s in front, that is unneccessary";
                         writeToFile(request, response);
                         // Wait 3 seconds
