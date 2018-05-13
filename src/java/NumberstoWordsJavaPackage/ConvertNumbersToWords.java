@@ -18,6 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 
+/** A public class used to verify input's correct format, convert numbered input
+ *  into text and write and message to a text file. 
+ * 
+ * @author Michael Cartwright
+ */
 public class ConvertNumbersToWords extends HttpServlet {
     
     int pos, inputLength, limiter;
@@ -27,7 +32,15 @@ public class ConvertNumbersToWords extends HttpServlet {
     // character 0 to 9 only and except decimal when present
     String regex = "[0-9]*[.]?[0-9]*"; // add??? |[0-9]+[.]?[0-9]+" at end. Might need * in case decimal digits are 
                                        // required regardless of decimal present
-    /*
+    /**
+     * Checks the character at the current position in the user's input. That
+     * number is then checked with what variable it is so that the variable may
+     * be converted into text.
+     *
+     * <P> PRE: unitConversion was called from either tensConversion() or
+     *          processRequest.
+     * <P> POST: The current position's value has been identified and the
+     *           text format has been concatenated with convertedOutput.
      *
      */
     protected void unitConversion() {
@@ -54,10 +67,21 @@ public class ConvertNumbersToWords extends HttpServlet {
         }
     }
     
-    /*
+    /**
+     * Checks the character at the current position in the user's input. That
+     * number is then checked with what variable it is so that the variable may
+     * be converted into text. If the variable's value is '1', another check
+     * on the next position's value is performed in order to produce the
+     * correct word conversion.
+     *
+     * <P> PRE: tensConversion was called from processRequest.
+     * <P> POST: The current position's value has been identified and the
+     *           text format has been concatenated with convertedOutput.
      *
      */
     protected void tensConversion() {
+        // Prevent double ' and' from appearing for certain scenarios where
+        // the user's input has a length of 3 or 6
         if(inputLength == 3 || inputLength == 6) {
             if(limiter == 0) {
                 andConversion();
@@ -146,7 +170,14 @@ public class ConvertNumbersToWords extends HttpServlet {
         }
     }
     
-    /*
+    /**
+     * Checks the character at the current position in the user's input. That
+     * number is then checked with what variable it is so that the variable may
+     * be converted into text.
+     *
+     * <P> PRE: hundredsConversion was called from processRequest.
+     * <P> POST: The current position's value has been identified and the
+     *           text format has been concatenated with convertedOutput.
      *
      */
     protected void hundredsConversion() {
@@ -171,29 +202,57 @@ public class ConvertNumbersToWords extends HttpServlet {
         }
     }
     
-    /*
+    /**
+     * Is called from processRequest when inputLength has a length of 1, 2, 3,
+     * 4, 5 and 6.
+     *
+     * <P> PRE: dollarsConversion was called from processRequest.
+     * <P> POST: convertedOutput is concatenated.
      *
      */
     protected void dollarsConversion() {
         convertedOutput = convertedOutput + space + dollars;
     }
     
-    /*
+    /**
+     * Is called from processRequest when inputLength has a length of 4, 5 and 
+     * 6.
+     *
+     * <P> PRE: centsConversion was called from processRequest.
+     * <P> POST: convertedOutput is concatenated.
      *
      */
     protected void centsConversion() {
         convertedOutput = convertedOutput + space + cents;
     }
     
-    /*
+    /**
+     * Is called from processRequest or tensConversion to ensure text format
+     * meets requirements.
+     *
+     * <P> PRE: andConversion was called from processRequest or tensConversion.
+     * <P> POST: convertedOutput is concatenated.
      *
      */
     protected void andConversion() {
         convertedOutput = convertedOutput + space + and + space;
     }
     
-    /*
+    
+    /**
      * Wipes 'output.txt' text so that output messages do not stack.
+     *
+     * <P> PRE: Called from processRequest.
+     * <P> POST: Inserts an empty string into the "output.txt" file.
+     * 
+     * @param request - Java servlet function that allows for requesting a
+     *                  specified address.
+     * @param response - Java servlet function that is used to get a response
+     *                   when forwarding.
+     * @throws ServletException if there is an issue with the request dispatch
+     * @throws IOException if something has failed or interrupted the I/O
+     *         operations.
+     *
      */
     protected void wipeFile(HttpServletRequest request, HttpServletResponse response)
                                throws ServletException, IOException {
@@ -212,7 +271,23 @@ public class ConvertNumbersToWords extends HttpServlet {
         }
     }
     
-    /*
+    /**
+     * Writes a message from the processRequest to the specified file and it's
+     * path.
+     *
+     * <P> PRE: Called from processRequest.
+     * <P> POST: Inserts an string used to be written into the "output.txt"
+     *           file. This can be an error message or the converted output.
+     *           This string is used mainly to produce text in the index.html
+     *           output section to communicate the result to the user.
+     * 
+     * @param request - Java servlet function that allows for requesting a
+     *                  specified address.
+     * @param response - Java servlet function that is used to get a response
+     *                   when forwarding.
+     * @throws ServletException if there is an issue with the request dispatch
+     * @throws IOException if something has failed or interrupted the I/O
+     *         operations.
      *
      */
     protected void writeToFile(HttpServletRequest request, HttpServletResponse response)
@@ -232,23 +307,40 @@ public class ConvertNumbersToWords extends HttpServlet {
         }
     }
     
-    /*
+    /**
+     * The main component of the Numbers to Words Conversion project. 
+     *
+     * <P> PRE: User has clicked on the html type submit id 'Convert'. The users
+     *          input at the html type text id 'input' is requested and used
+     *          to be checked and if with the correct format, converted.
+     * <P> POST: Calls writeToFile to take the message produced and have it
+     *           written to 'output.txt'. Then waits 3 seconds before requesting
+     *           dispatch back to index.html.
+     * 
+     * @param request - Java servlet function that allows for requesting a
+     *                  specified address.
+     * @param response - Java servlet function that is used to get a response
+     *                   when forwarding.
+     * @throws ServletException if there is an issue with the request dispatch
+     * @throws IOException if something has failed or interrupted the I/O
+     *         operations.
      *
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
                                   throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         try {
+            // Wipes the 'output.txt' file to prevent stacking up messages.
             wipeFile(request, response);
             
-            // Make convertedOutput empty string to remove null
+            // Make convertedOutput empty string to remove null concatenation issue
             convertedOutput = "";
-            // Prevent andConversion to occur twice for userLength = 6 scenarios
+            // Prevent andConversion to occur twice for certain inputLength scenarios
             limiter = 0;
             userInput = request.getParameter("input");
             inputLength = userInput.length();
             
-            // <editor-fold defaultstate="collapsed" desc="Conversion String components">
+            // <editor-fold defaultstate="collapsed" desc="List of Strings used for word conversion">
             one = "ONE";
             two = "TWO";
             three = "THREE";

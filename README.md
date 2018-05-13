@@ -23,7 +23,8 @@ Output: “ONE HUNDRED AND TWENTY-THREE DOLLARS AND FORTY-FIVE CENTS”
 
 This project did not state how many variables the author was suppose to
 work with. The maximum input is 6 characters (999.99). Hundreds, tens,
-units, and up to 2 decimal places at this project's limitations. 
+units, and up to 2 decimal places are this project's limitations. This
+was chosen due to time constraits.
 
 # What is Included at this Repository?
 
@@ -43,3 +44,4 @@ units, and up to 2 decimal places at this project's limitations.
 2. git clone this repository or download a zipped file of the repository.
 3. Using NetBeans, load the project.
 4. Build and Run the project.
+5. To view Javadoc, Run > Generate Javadoc (Numbers to Words Web Page).

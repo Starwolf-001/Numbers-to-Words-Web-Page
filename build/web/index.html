@@ -32,10 +32,27 @@ Version    : 1.1
         ------------------------------------------------------------------</div>
         <!--User Interface Script-->
         <script type ="text/javascript">
-            // Simple validation to communicate to the user aout his/her input 
-            // and notifies them on whether it 'should' be valid or not.
-            // TODO: Have indexOf check each character position of text and
-            //       validate properly. indexOf('char', pos)
+           /**
+            * Checks if the user's input in HTML type text id "input" is valid
+            * by notifying the user whether the user has input characters or
+            * not. The current version is not capable of checking each
+            * character in the user input here on index.html.
+            * 
+            * <P> PRE: User has at least clicked on the input type text.
+            * <P> POST: If there was no input an error message appears in red.
+            *           If the user puts in characters where they all are not
+            *           characters from '0 - 9' or '.', an error will appear in
+            *           red text. If the user input's at least one of those
+            *           characters, a message in green font will appear to state
+            *           the input is ready to convert.
+            *           
+            * @param input - The identifying variable used to indicate the type 
+            *                text that is used for the user's input.
+            * @param errorInput - The identifying variable used to indicate the 
+            *                     type label used for feedback messages.
+            * 
+            * @return The Customer's name.
+            */
             function validateInput() {
                 var text = document.getElementById("input").value;
                 // Check if certain characters are being used
@@ -60,7 +77,8 @@ Version    : 1.1
                 }
             }
         </script>
-        <!--User Interface Form-->
+        <!--When covert submit is clicked, Posts to ConvertNumbersToWords using
+            Java a servlet-->
         <form action ="ConvertNumbersToWords" method ="POST" name ="Convert">
             <table>
                 <tr>
@@ -91,8 +109,9 @@ Version    : 1.1
                         Output:
                     </td>
                     <td>
-                        <!-- Requires user to attempt multiple submits until output appears correctly -->
-                        <!-- Very finicky, at least works compared to JavaScript read file attempts-->
+                        <!-- Developer note: object data requires the Java 
+                             thread to sleep for 3 seconds in order to
+                             update the correct conversion on time -->
                         <object data ="output.txt" width="800" height="36" id ="output"></object>
                     </td>
                     <td>
