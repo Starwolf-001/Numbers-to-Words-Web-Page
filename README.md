@@ -19,6 +19,12 @@ Output example:
 Input: “123.45”
 Output: “ONE HUNDRED AND TWENTY-THREE DOLLARS AND FORTY-FIVE CENTS”
 
+# Limitations
+
+This project did not state how many variables the author was suppose to
+work with. The maximum input is 6 characters (999.99). Hundreds, tens,
+units, and up to 2 decimal places at this project's limitations. 
+
 # What is Included at this Repository?
 
 * A HTML web user interface to allow the routine to be tested interactively.
