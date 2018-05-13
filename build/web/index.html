@@ -10,7 +10,7 @@ Version    : 1.0
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body onload="updateOutput();">
+    <body>
         <!--Instructions-->
         <div>Welcome to Michael Cartwright's 'Number to Words Web Page'.</div>
         <div>-------------------------------------------------------------------
@@ -59,23 +59,6 @@ Version    : 1.0
                             "red";
                 }
             }
-            
-            function updateOutput() {
-                filePath = "C:/output.txt";
-                var string = "";
-                var textFile = new File(filePath);
-                textFile.open("r");
-                while(!txtFile.eof) {
-                    // read each line
-                    string += textFile.readln() + "\n";
-                }
-                file.close();
-                if(string === "") {
-                    document.getElementById("output").value = "Error: Cannot read file";
-                } else {
-                    document.getElementById("output").value = string;
-                }
-            }
         </script>
         <!--User Interface Form-->
         <form action ="ConvertNumbersToWords" method ="POST" name ="Convert">
@@ -108,7 +91,8 @@ Version    : 1.0
                         Output:
                     </td>
                     <td>
-                        <input type ="text" id ="output" name ="output">
+                        <!--<input type ="text" id ="output" name ="output">-->
+                        <object data ="output.txt"></object>
                     </td>
                     <td>
                     </td>
