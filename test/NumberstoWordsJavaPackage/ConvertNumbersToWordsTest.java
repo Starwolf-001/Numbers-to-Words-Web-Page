@@ -45,10 +45,15 @@ public class ConvertNumbersToWordsTest {
     public void testUnitConversionInputZero() {
         System.out.println("testUnitConversionInputZero");
         ConvertNumbersToWords instance = new ConvertNumbersToWords();
+        instance.convertedOutput = "";
+        instance.userInput = "0";
+        instance.inputLength = 1;
+        instance.pos = 0;
         instance.unitConversion();
         if(instance.convertedOutput.equals("ZERO")) {
             assertTrue(true);
         } else {
+            System.out.println(instance.convertedOutput);
             fail("testUnitConversionInputZero has failed and shouldn't have.");
         }
     }
@@ -76,7 +81,6 @@ public class ConvertNumbersToWordsTest {
     public void testHundredsConversion() {
         System.out.println("hundredsConversion");
         ConvertNumbersToWords instance = new ConvertNumbersToWords();
-        instance.hundredsConversion("0", 0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

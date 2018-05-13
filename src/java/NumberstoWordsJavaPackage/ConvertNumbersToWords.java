@@ -1,8 +1,8 @@
 /*
  * Document   : ConvertNumbersToWords.java
- * Created on : 13/05/2018, 6:29:35 PM
+ * Created on : 13/05/2018, 8:07:00 PM
  * Author     : Michael Cartwright
- * Version    : 1.1
+ * Version    : 1.2
  */
 package NumberstoWordsJavaPackage;
 
@@ -25,7 +25,7 @@ import java.io.BufferedWriter;
  */
 public class ConvertNumbersToWords extends HttpServlet {
     
-    int pos, inputLength, limiter;
+    int pos, inputLength, limiter, noExtraAnd;
     String userInput, convertedOutput, one, two, three, four, five, six, seven, eight, nine, space, and, hundred, hypen;
     String dollars, cents, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen;
     String twenty, thirty, fourty, fifty, sixty, seventy, eighty, ninety, dollar, zero, message;
@@ -80,14 +80,19 @@ public class ConvertNumbersToWords extends HttpServlet {
      *
      */
     protected void tensConversion() {
+        // Adjust for necessary zeros
+        if(userInput.charAt(pos) == '0') {
+            noExtraAnd = 1;
+        }
         // Prevent double ' and' from appearing for certain scenarios where
         // the user's input has a length of 3 or 6
         if(inputLength == 3 || inputLength == 6) {
-            if(limiter == 0) {
+            if(limiter == 0 && noExtraAnd == 0) {
                 andConversion();
                 limiter = 1;
             }
         }
+        noExtraAnd = 0;
         if(userInput.charAt(pos) == '1') {
             pos++;
             if(userInput.charAt(pos) == '0') {
@@ -167,6 +172,16 @@ public class ConvertNumbersToWords extends HttpServlet {
                 pos++;
                 unitConversion();
             }
+        } else if(userInput.charAt(pos) == '0') {
+            if(inputLength == 3) {
+                andConversion();
+            }
+            else if(inputLength == 6 && userInput.charAt(1) == '0' && userInput.charAt(4) == '0' && limiter == 0) {
+                limiter = 1;
+                andConversion();
+            }
+            pos++;
+            unitConversion();
         }
     }
     
@@ -337,6 +352,7 @@ public class ConvertNumbersToWords extends HttpServlet {
             convertedOutput = "";
             // Prevent andConversion to occur twice for certain inputLength scenarios
             limiter = 0;
+            noExtraAnd = 0;
             userInput = request.getParameter("input");
             inputLength = userInput.length();
             
@@ -393,7 +409,53 @@ public class ConvertNumbersToWords extends HttpServlet {
             }
             // Check that user input matches characters 0 - 9 and if there is a decimal
             else if(userInput.matches(regex)) {
-                //Convert numbers to words
+                
+                // Check if there are 0s in front of other numbers at certain lengths
+                if(inputLength == 2) {
+                    if(userInput.charAt(0) == '0') {
+                        message = "Error: Do not add 0s in front, that is unneccessary";
+                        writeToFile(request, response);
+                        // Wait 3 seconds
+                        Thread.sleep(3000);
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                    }
+                }
+                
+                if(inputLength == 3) {
+                    if(userInput.charAt(0) == '0' && userInput.charAt(1) == '0') {
+                        message = "Error: Do not add 0s in front, that is unneccessary";
+                        writeToFile(request, response);
+                        // Wait 3 seconds
+                        Thread.sleep(3000);
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                    }
+                }
+                
+                if(inputLength == 5) {
+                    if(userInput.charAt(0) == '0') {
+                        message = "Error: Do not add 0s in front, that is unneccessary";
+                        writeToFile(request, response);
+                        // Wait 3 seconds
+                        Thread.sleep(3000);
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                    }
+                }
+                
+                if(inputLength == 6) {
+                    if(userInput.charAt(0) == '0' && userInput.charAt(1) == '0') {
+                        message = "Error: Do not add 0s in front, that is unneccessary";
+                        writeToFile(request, response);
+                        // Wait 3 seconds
+                        Thread.sleep(3000);
+                        RequestDispatcher reqdispatch = request.getRequestDispatcher("index.html");
+                        reqdispatch.forward(request, response);
+                    }
+                }
+                
+                // Convert numbers to words
                 
                 /* 1. Prevent incorrect possible format inputs
                  * 2. Check length of user input
