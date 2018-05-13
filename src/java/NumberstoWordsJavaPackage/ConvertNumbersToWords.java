@@ -58,12 +58,13 @@ public class ConvertNumbersToWords extends HttpServlet {
      *
      */
     protected void tensConversion() {
+        if(inputLength == 3 || inputLength == 6) {
+            if(limiter == 0) {
+                andConversion();
+                limiter = 1;
+            }
+        }
         if(userInput.charAt(pos) == '1') {
-            if(inputLength == 3 || inputLength == 6)
-                if(limiter == 0) {
-                    andConversion();
-                    limiter = 1;
-                }
             pos++;
             if(userInput.charAt(pos) == '0') {
                 convertedOutput = convertedOutput + ten;
@@ -87,7 +88,6 @@ public class ConvertNumbersToWords extends HttpServlet {
                 convertedOutput = convertedOutput + nineteen;
             }
         } else if(userInput.charAt(pos) == '2') {
-            andConversion();
             convertedOutput = convertedOutput + twenty;
             if(userInput.charAt(pos + 1) != '0') {
                 convertedOutput = convertedOutput + hypen;
@@ -95,7 +95,6 @@ public class ConvertNumbersToWords extends HttpServlet {
                 unitConversion();
             }
         } else if(userInput.charAt(pos) == '3') {
-            andConversion();
             convertedOutput = convertedOutput + thirty;
             if(userInput.charAt(pos + 1) != '0') {
                 convertedOutput = convertedOutput + hypen;
@@ -103,7 +102,6 @@ public class ConvertNumbersToWords extends HttpServlet {
                 unitConversion();
             }
         } else if(userInput.charAt(pos) == '4') {
-            andConversion();
             convertedOutput = convertedOutput + fourty;
             if(userInput.charAt(pos + 1) != '0') {
                 convertedOutput = convertedOutput + hypen;
@@ -111,7 +109,6 @@ public class ConvertNumbersToWords extends HttpServlet {
                 unitConversion();
             }
         } else if(userInput.charAt(pos) == '5') {
-            andConversion();
             convertedOutput = convertedOutput + fifty;
             if(userInput.charAt(pos + 1) != '0') {
                 convertedOutput = convertedOutput + hypen;
@@ -119,7 +116,6 @@ public class ConvertNumbersToWords extends HttpServlet {
                 unitConversion();
             }
         } else if(userInput.charAt(pos) == '6') {
-            andConversion();
             convertedOutput = convertedOutput + sixty;
             if(userInput.charAt(pos + 1) != '0') {
                 convertedOutput = convertedOutput + hypen;
@@ -127,7 +123,6 @@ public class ConvertNumbersToWords extends HttpServlet {
                 unitConversion();
             }
         } else if(userInput.charAt(pos) == '7') {
-            andConversion();
             convertedOutput = convertedOutput + seventy;
             if(userInput.charAt(pos + 1) != '0') {
                 convertedOutput = convertedOutput + hypen;
@@ -135,7 +130,6 @@ public class ConvertNumbersToWords extends HttpServlet {
                 unitConversion();
             }
         } else if(userInput.charAt(pos) == '8') {
-            andConversion();
             convertedOutput = convertedOutput + eighty;
             if(userInput.charAt(pos + 1) != '0') {
                 convertedOutput = convertedOutput + hypen;
@@ -143,7 +137,6 @@ public class ConvertNumbersToWords extends HttpServlet {
                 unitConversion();
             }
         } else if(userInput.charAt(pos) == '9') {
-            andConversion();
             convertedOutput = convertedOutput + ninety;
             if(userInput.charAt(pos + 1) != '0') {
                 convertedOutput = convertedOutput + hypen;
