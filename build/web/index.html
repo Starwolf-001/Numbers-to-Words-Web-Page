@@ -10,7 +10,7 @@ Version    : 1.0
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
+    <body onload="updateOutput();">
         <!--Instructions-->
         <div>Welcome to Michael Cartwright's 'Number to Words Web Page'.</div>
         <div>-------------------------------------------------------------------
@@ -61,7 +61,20 @@ Version    : 1.0
             }
             
             function updateOutput() {
-                document.getElementById("output").value = "updated";
+                filePath = "C:/output.txt";
+                var string = "";
+                var textFile = new File(filePath);
+                textFile.open("r");
+                while(!txtFile.eof) {
+                    // read each line
+                    string += textFile.readln() + "\n";
+                }
+                file.close();
+                if(string === "") {
+                    document.getElementById("output").value = "Error: Cannot read file";
+                } else {
+                    document.getElementById("output").value = string;
+                }
             }
         </script>
         <!--User Interface Form-->
